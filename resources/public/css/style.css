@@ -1,0 +1,54 @@
+table {
+  border-collapse: collapse;
+}
+
+.game table {
+  float: left;
+}
+
+table.game-over {
+  opacity: 0.5;
+}
+
+pre {
+  margin-top: 0px;
+  margin-left: 20px;
+  float: left;
+}
+
+table, th, td {
+  border: 1px solid gray;
+}
+
+td {
+  width: 20px;
+  width: 20px;
+}
+
+td.I {
+  background-color: orange;
+}
+
+td.J {
+  background-color: cyan;
+}
+
+td.L {
+  background-color: red;
+}
+
+td.O {
+  background-color: deeppink;
+}
+
+td.S {
+  background-color: magenta;
+}
+
+td.T {
+  background-color: lime;
+}
+
+td.Z {
+  background-color: coral;
+}
