@@ -25,6 +25,10 @@ td {
   width: 20px;
 }
 
+td.shadow {
+  opacity: 0.2;
+}
+
 td.I {
   background-color: orange;
 }

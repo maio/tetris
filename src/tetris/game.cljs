@@ -4,10 +4,11 @@
             [goog.string :as gstring]
             [tetris.math :refer [gen-rotated]]))
 
-(defn default-state [& [{:keys [width height drop-speed]
+(defn default-state [& [{:keys [width height drop-speed drop-shadow?]
                          :or {width 10
                               height 20
-                              drop-speed 500}}]]
+                              drop-speed 500
+                              drop-shadow? true}}]]
   (reagent/atom {;; Board dimensions
                  :width width
                  :height height
@@ -25,6 +26,9 @@
                  ;; And current position
                  :x nil
                  :y nil
+                 ;; Render shadow of a falling piece? It helps user to
+                 ;; place the piece in the right place.
+                 :drop-shadow? drop-shadow?
                  ;; Drop counter is incremented on each tick and if
                  ;; it's currently greater than drop speed, then piece
                  ;; is dropped by one row and counter is reset.
@@ -153,8 +157,9 @@
 
 (defn force-full-drop
   "Drop piece until it hits something."
-  [state]
-  (if (can-drop? state)
+  [{:keys [current-piece] :as state}]
+  (if (and current-piece
+           (can-drop? state))
     (->> state
          (iterate move-down)
          (drop-while can-drop?)
@@ -301,15 +306,33 @@
       (assoc :board-to-render board)
       (update :board-to-render render-shape current-piece [x y] rotation)))
 
-(defn TetrisBoard [state]
-  (let [{:keys [width height board-to-render game-over]} (render state)]
+(defn render-shadow
+  "Render piece shadow (i.e. where it's currently going to drop)."
+  [{:keys [current-piece rotation] :as state}]
+  (let [{:keys [x y]} (force-full-drop state)]
+    (-> state
+        (assoc :shadow-to-render {})
+        (update :shadow-to-render render-shape current-piece [x y] rotation))))
+
+(defn TetrisBoard [{:keys [drop-shadow?] :as state}]
+  (let [{:keys [width height board-to-render shadow-to-render game-over]}
+        (-> state render
+            (cond-> drop-shadow? render-shadow))]
     [:table {:class (when game-over "game-over")}
      [:tbody
       (for [row (range height)]
         [:tr {:key row}
          (for [col (range width)]
-           [:td {:key col
-                 :class (name (board-to-render [col row] :default))} nbsp])])]]))
+           (let [occupied-by (get board-to-render [col row])
+                 shadow-of (get shadow-to-render [col row])]
+             [:td {:key col
+                   :class (cond
+                            occupied-by
+                            (name occupied-by)
+
+                            shadow-of
+                            (str (name shadow-of) " shadow"))}
+              nbsp]))])]]))
 
 (defn Tetris [state]
   [:div

@@ -26,7 +26,7 @@
      [RotateButton state]
      [MoveRightButton state]])
 
-  (state-with {:width 5 :height 5}
+  (state-with {:width 5 :height 5 :drop-shadow? false}
               [#(tetris/set-next-piece % :T)]))
 
 (defcard-rg collision-with-other-pieces
@@ -41,7 +41,7 @@
      [RotateButton state]
      [MoveRightButton state]])
 
-  (state-with {:width 5 :height 5}
+  (state-with {:width 5 :height 5 :drop-shadow? false}
               [#(tetris/set-next-piece % :Z)
                tetris/move-left
                drop-while-can
@@ -63,7 +63,7 @@
      [RotateButton state]
      [MoveRightButton state]])
 
-  (state-with {:width 5 :height 5}
+  (state-with {:width 5 :height 5 :drop-shadow? false}
               [#(tetris/set-next-piece % :Z)
                tetris/move-left
                drop-while-can

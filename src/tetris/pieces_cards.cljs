@@ -1,8 +1,16 @@
 (ns tetris.pieces-cards
   (:require [devcards.core]
-            [tetris.cards-helpers :refer [TetrisBoards state-with RotateButton]]
+            [tetris.cards-helpers :refer [TetrisBoards RotateButton]]
             [tetris.game :as tetris])
   (:require-macros [devcards.core :refer [defcard-rg]]))
+
+(defn state-with
+  "Here we don't want to drop shadow in any devcard."
+  [defaults fns]
+  (tetris.cards-helpers/state-with
+   (merge {:drop-shadow? false}
+          defaults)
+   fns))
 
 (defn Piece [state]
   [TetrisBoards state
