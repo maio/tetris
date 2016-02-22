@@ -10,13 +10,17 @@
     (modify-state! state fns)
     state))
 
-(defn TetrisBoards [state & fns]
-  [:div {:style {:display "flex" :margin-bottom "7px"}}
-   (doall
-    (for [[idx fn] (map-indexed (fn [idx itm] [idx itm]) (concat [identity] (or fns [])))]
-      [:div {:key idx
-             :style {:margin-right "10px"}}
-       [tetris/TetrisBoard (fn @state)]]))])
+(defn TetrisBoards
+  ([state]
+   [TetrisBoards state []])
+  ([state fns]
+   [:div {:style {:display "flex" :margin-bottom "7px"}}
+    (doall
+     (for [[idx fn] (map-indexed (fn [idx itm] [idx itm])
+                                 (concat [identity] (or fns [])))]
+       [:div {:key idx
+              :style {:margin-right "10px"}}
+        [tetris/TetrisBoard (fn @state)]]))]))
 
 (defn FullTickButton [state]
   [:button {:on-click #(tetris/dispatch! state [:tick (@state :drop-speed)])}

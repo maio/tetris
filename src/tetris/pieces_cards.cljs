@@ -14,9 +14,9 @@
 
 (defn Piece [state]
   [TetrisBoards state
-   tetris/rotate
-   (comp tetris/rotate tetris/rotate)
-   (comp tetris/rotate tetris/rotate tetris/rotate)])
+   [tetris/rotate
+    (comp tetris/rotate tetris/rotate)
+    (comp tetris/rotate tetris/rotate tetris/rotate)]])
 
 (defcard-rg I-piece
   (fn [state _]

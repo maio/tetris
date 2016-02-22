@@ -21,7 +21,7 @@
   "Falling piece should stop at the bottom."
   (fn [state _]
     [:div
-     [TetrisBoards state drop-while-can]
+     [TetrisBoards state [drop-while-can]]
      [MoveLeftButton state]
      [RotateButton state]
      [MoveRightButton state]])
@@ -34,9 +34,9 @@
   (fn [state _]
     [:div
      [TetrisBoards state
-      drop-while-can
-      (comp drop-while-can tetris/maybe-move-right)
-      (comp drop-while-can tetris/maybe-move-right tetris/maybe-move-right)]
+      [drop-while-can
+       (comp drop-while-can tetris/maybe-move-right)
+       (comp drop-while-can tetris/maybe-move-right tetris/maybe-move-right)]]
      [MoveLeftButton state]
      [RotateButton state]
      [MoveRightButton state]])
@@ -54,11 +54,11 @@
   (fn [state _]
     [:div
      [TetrisBoards state
-      drop-while-can
-      (comp tetris/clear-full-rows
-            tetris/clear-piece
-            tetris/freeze-piece-in-place
-            drop-while-can)]
+      [drop-while-can
+       (comp tetris/clear-full-rows
+             tetris/clear-piece
+             tetris/freeze-piece-in-place
+             drop-while-can)]]
      [MoveLeftButton state]
      [RotateButton state]
      [MoveRightButton state]])
