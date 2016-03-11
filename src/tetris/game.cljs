@@ -9,7 +9,8 @@
                               height 20
                               drop-speed 500
                               drop-shadow? true}}]]
-  (reagent/atom {;; Board dimensions
+  (reagent/atom {:score 0
+                 ;; Board dimensions
                  :width width
                  :height height
                  ;; Board holds coords of occupied cells (by pieces
@@ -142,6 +143,7 @@
 (defn move-down [{:keys [drop-speed drop-counter] :as state}]
   (-> state
       (update :y inc)
+      (update :score inc)
       (assoc :drop-counter (max 0 (- drop-counter drop-speed)))))
 
 (defn rotate [state]
@@ -336,6 +338,7 @@
 
 (defn Tetris [state]
   [:div
+   [:div (:score @state)]
    [TetrisBoard @state]
    ;; Pretty print current state.
    [:pre (with-out-str

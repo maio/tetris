@@ -74,7 +74,7 @@
 (defcard-rg full-gameplay
   (fn [state _]
     [:div
-     [TetrisBoards state]
+     [TetrisBoards state [] {:show-score? true}]
      [:div {:style {:display "flex" :align-items "center"}}
       [MoveLeftButton state]
       [:div {:style {:display "flex" :flex-direction "column"}}
