@@ -20,7 +20,7 @@ To get an interactive development environment:
     cd tetris
     lein figwheel dev cards
 
-and open resources/public/index.html or resources/public/cards.html in your browser. Any change to source code or CSS will be pushed to the browser immediately.
+and open `resources/public/index.html` or `resources/public/cards.html` in your browser. Any change to source code or CSS will be pushed to the browser immediately.
 
 To create a production build run:
 
